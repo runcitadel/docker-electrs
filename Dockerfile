@@ -1,6 +1,6 @@
 ARG VERSION=v0.8.11
 
-FROM 1.54.0-slim-bullseye as builder
+FROM rust:1.54.0-slim-bullseye as builder
 
 WORKDIR /build
 
@@ -9,7 +9,7 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN git clone --branch $VERSION https://github.com/romanz/electrs .
+RUN git clone --depth=1 --branch $VERSION https://github.com/romanz/electrs .
 
 RUN cargo install --locked --path .
 
