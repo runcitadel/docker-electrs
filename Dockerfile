@@ -13,6 +13,8 @@ RUN apt-get update \
 
 RUN git clone --depth=1 --branch $VERSION https://github.com/romanz/electrs .
 
+RUN rustup component add rustfmt
+
 RUN cargo install --locked --path .
 
 # Create runtime image
