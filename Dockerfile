@@ -5,7 +5,7 @@ FROM rust:1.54.0-slim-bullseye as builder
 WORKDIR /build
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends clang cmake libsnappy-dev \
+    && apt-get install -y --no-install-recommends clang cmake libsnappy-dev git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
