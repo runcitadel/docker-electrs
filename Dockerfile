@@ -2,6 +2,8 @@ ARG VERSION=v0.8.11
 
 FROM rust:1.54.0-slim-bullseye as builder
 
+ARG VERSION
+
 WORKDIR /build
 
 RUN apt-get update \
