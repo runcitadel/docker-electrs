@@ -1,4 +1,4 @@
-ARG VERSION=v0.8.11
+ARG VERSION=p2p
 
 FROM rust:1.54.0-slim-bullseye as builder
 
