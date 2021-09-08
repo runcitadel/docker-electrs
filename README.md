@@ -1,2 +1,3 @@
-<!-- For actual repositories, replace this template -->
-# Template repository
+# docker-electrs
+
+Docker containers for [electrs](https://github.com/romanz/electrs).
