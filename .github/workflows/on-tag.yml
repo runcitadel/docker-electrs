@@ -19,6 +19,11 @@ jobs:
       - name: Checkout project
         uses: actions/checkout@v2
 
+      - name: Set Swap Space
+        uses: pierotofy/set-swap-space@master
+        with:
+          swap-size-gb: 10
+
       - name: Set env variables
         run: |
           echo "TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
