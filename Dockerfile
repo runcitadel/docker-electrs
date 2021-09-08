@@ -21,9 +21,7 @@ FROM debian:bullseye-slim as final
 
 COPY --from=electrs-build /usr/local/cargo/bin/electrs /usr/bin/electrs
 
-RUN groupadd -r user \
-    && adduser --disabled-login --system --shell /bin/false --uid 1000 --ingroup user user \
-    && chown -R user:user /app
+RUN groupadd -r user && adduser --disabled-login --system --shell /bin/false --uid 1000 --ingroup user user
 
 USER user
 
