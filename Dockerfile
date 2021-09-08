@@ -1,33 +1,25 @@
 ARG VERSION=p2p
 
-FROM rust:1.54.0-slim-bullseye as builder
+FROM rust:1.48.0-slim as electrs-build
 
 ARG VERSION
 
-WORKDIR /build
-
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends clang cmake libsnappy-dev git \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN git clone --depth=1 --branch $VERSION https://github.com/romanz/electrs .
-
+RUN apt-get update
+RUN apt-get install -qq -y clang cmake git
 RUN rustup component add rustfmt
 
+# Build, test and install electrs
+WORKDIR /build/electrs
+RUN git clone --depth=1 --branch $VERSION https://github.com/romanz/electrs .
+RUN echo "1.48.0" > rust-toolchain
+RUN cargo fmt -- --check
+RUN cargo build --locked --release --all
+RUN cargo test --locked --release --all
 RUN cargo install --locked --path .
 
-# Create runtime image
-FROM debian:bullseye-slim
+FROM debian:bullseye-slim as final
 
-WORKDIR /app
-
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends curl \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-COPY --from=builder /build/target/release .
+COPY --from=electrs-build /usr/local/cargo/bin/electrs /usr/bin/electrs
 
 RUN groupadd -r user \
     && adduser --disabled-login --system --shell /bin/false --uid 1000 --ingroup user user \
@@ -45,4 +37,4 @@ STOPSIGNAL SIGINT
 
 HEALTHCHECK CMD curl -fSs http://localhost:4224/ || exit 1
 
-ENTRYPOINT ["./electrs"]
+ENTRYPOINT ["/usr/bin/electrs"]
