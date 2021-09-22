@@ -19,6 +19,8 @@ RUN cargo install --locked --path .
 
 FROM debian:bullseye-slim as final
 
+RUN apt update && apt dist-upgrade -y && apt clean
+
 COPY --from=electrs-build /usr/local/cargo/bin/electrs /usr/bin/electrs
 
 RUN groupadd -r user && adduser --disabled-login --system --shell /bin/false --uid 1000 --ingroup user user
