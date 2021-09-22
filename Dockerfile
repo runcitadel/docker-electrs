@@ -1,4 +1,4 @@
-ARG VERSION=p2p
+ARG VERSION=master
 
 FROM rust:1.48.0-slim as electrs-build
 
