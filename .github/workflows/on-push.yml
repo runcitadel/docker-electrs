@@ -47,5 +47,5 @@ jobs:
                 --cache-from "type=local,src=/tmp/.buildx-cache" \
                 --cache-to "type=local,dest=/tmp/.buildx-cache" \
                 --platform ${{ matrix.arch }} \
-                --tag ${{ secrets.DOCKER_CONTAINER_USERNAME }}/$IMAGE_NAME:$BRANCH \
+                --tag ghcr.io/${{ secrets.DOCKER_CONTAINER_USERNAME }}/$IMAGE_NAME:$BRANCH \
                 --output "type=registry" ./
