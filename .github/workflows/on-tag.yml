@@ -38,8 +38,6 @@ jobs:
       - name: Run Docker buildx
         run: |
                 docker buildx build \
-                --cache-from "type=local,src=/tmp/.buildx-cache" \
-                --cache-to "type=local,dest=/tmp/.buildx-cache" \
                 --platform linux/amd64 \
                 --build-arg VERSION=$TAG \
                 --tag ${{ secrets.DOCKER_CONTAINER_USERNAME }}/$IMAGE_NAME:$TAG \
@@ -69,8 +67,6 @@ jobs:
       - name: Run Docker buildx
         run: |
                 docker buildx build \
-                --cache-from "type=local,src=/tmp/.buildx-cache" \
-                --cache-to "type=local,dest=/tmp/.buildx-cache" \
                 --platform linux/arm64 \
                 --network host \
                 --build-arg VERSION=$TAG \
