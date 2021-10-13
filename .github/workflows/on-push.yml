@@ -71,5 +71,6 @@ jobs:
                 --cache-from "type=local,src=/tmp/.buildx-cache" \
                 --cache-to "type=local,dest=/tmp/.buildx-cache" \
                 --platform linux/arm64 \
+                --network host \
                 --tag ghcr.io/${{ secrets.DOCKER_CONTAINER_USERNAME }}/$IMAGE_NAME:$BRANCH \
                 --output "type=registry" ./

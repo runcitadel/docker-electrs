@@ -19,11 +19,6 @@ jobs:
       - name: Checkout project
         uses: actions/checkout@v2
 
-      - name: Set Swap Space
-        uses: pierotofy/set-swap-space@master
-        with:
-          swap-size-gb: 10
-
       - name: Set env variables
         run: |
           echo "TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
@@ -63,11 +58,6 @@ jobs:
       - name: Checkout project
         uses: actions/checkout@v2
 
-      - name: Set Swap Space
-        uses: pierotofy/set-swap-space@master
-        with:
-          swap-size-gb: 10
-
       - name: Set env variables
         run: |
           echo "TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
@@ -93,7 +83,8 @@ jobs:
                 docker buildx build \
                 --cache-from "type=local,src=/tmp/.buildx-cache" \
                 --cache-to "type=local,dest=/tmp/.buildx-cache" \
-                --platform linux/aem64 \
+                --platform linux/arm64 \
+                --network host \
                 --build-arg VERSION=$TAG \
                 --tag ${{ secrets.DOCKER_CONTAINER_USERNAME }}/$IMAGE_NAME:$TAG \
                 --output "type=registry" ./
