@@ -1,6 +1,6 @@
 ARG VERSION=master
 
-FROM rust:1.55.0-slim-bullseye as electrs-build
+FROM rust:1.63.0-slim-bullseye as electrs-build
 
 ARG VERSION
 
@@ -11,13 +11,13 @@ RUN rustup component add rustfmt
 # Build, test and install electrs
 WORKDIR /build/electrs
 RUN git clone --depth=1 --branch $VERSION https://github.com/romanz/electrs .
-RUN echo "1.55.0" > rust-toolchain
+RUN echo "1.63.0" > rust-toolchain
 RUN cargo fmt -- --check
 RUN cargo build --locked --release --all
 RUN cargo test --locked --release --all
 RUN cargo install --locked --path .
 
-FROM debian:11-slim as final
+FROM debian:bullseye-slim as final
 
 RUN apt update && apt dist-upgrade -y && apt clean
 
