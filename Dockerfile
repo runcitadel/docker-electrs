@@ -11,6 +11,7 @@ RUN rustup component add rustfmt
 # Build, test and install electrs
 WORKDIR /build/electrs
 RUN git clone --depth=1 --branch $VERSION https://github.com/romanz/electrs .
+RUN echo "1.65.0" > rust-toolchain
 RUN cargo fmt -- --check
 RUN cargo build --locked --release --all
 RUN cargo test --locked --release --all
