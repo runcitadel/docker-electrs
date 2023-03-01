@@ -17,7 +17,7 @@ RUN cargo build --locked --release --all
 RUN cargo test --locked --release --all
 RUN cargo install --locked --path .
 
-FROM debian:bullseye-slim as final
+FROM debian:11.6-slim as final
 
 RUN apt update && apt dist-upgrade -y && apt clean
 
